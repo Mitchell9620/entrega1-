@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorfly Studio generator</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+     <header class="app-header">
+    <div>
+      <p class="eyebrow">Colorfly Studio</p>
+      <h1>Generador de Paletas</h1>
+      <p class="description">
+        Crea paletas de colores aleatorias para acelerar propuestas visuales de branding.
+      </p>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="controls-section" aria-labelledby="controls-title">
+      <h2 id="controls-title">Configuración de la paleta</h2>
+
+      <form class="controls" id="paletteForm">
+        <div class="field-group">
+          <label for="paletteSize">Tamaño de la paleta</label>
+          <select id="paletteSize" name="paletteSize">
+            <option value="6">6 colores</option>
+            <option value="8">8 colores</option>
+            <option value="9">9 colores</option>
+          </select>
+        </div>
+
+        <button type="submit" class="primary-button">
+          Generar paleta
+        </button>
+
+        <button type="button" class="secondary-button" id="savePaletteButton">
+          Guardar paleta
+        </button>
+      </form>
+    </section>
+
+    <section class="palette-section" aria-labelledby="palette-title">
+      <h2 id="palette-title">Paleta generada</h2>
+
+      <div 
+        class="palette-grid" 
+        id="paletteGrid" 
+        aria-live="polite"
+      ></div>
+    </section>
+
+    <section class="saved-section" aria-labelledby="saved-title">
+      <h2 id="saved-title">Última paleta guardada</h2>
+      <div class="saved-palette" id="savedPalette">
+        <p class="empty-message">Aún no has guardado una paleta.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    Color copiado
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

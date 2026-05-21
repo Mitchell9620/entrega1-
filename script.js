@@ -1,3 +1,4 @@
+// ColorFly - Generador de paletas de colores js
 const paletteForm = document.getElementById("paletteForm");
 const paletteSize = document.getElementById("paletteSize");
 const paletteGrid = document.getElementById("paletteGrid");
@@ -6,7 +7,7 @@ const savePaletteButton = document.getElementById("savePaletteButton");
 const savedPalette = document.getElementById("savedPalette");
 
 let currentPalette = [];
-
+// Genera un color HSL aleatorio con valores dentro de un rango 
 function generateRandomHSL() {
   const hue = Math.floor(Math.random() * 361);
   const saturation = Math.floor(Math.random() * 41) + 50;
@@ -18,15 +19,16 @@ function generateRandomHSL() {
     l: lightness
   };
 }
-
+// Convierte un color HSL a formato hex
 function hslToHex(h, s, l) {
   s /= 100;
   l /= 100;
-
+// Cálculo de los componentes RGB a partir de HSL
   const chroma = (1 - Math.abs(2 * l - 1)) * s;
   const x = chroma * (1 - Math.abs((h / 60) % 2 - 1));
   const match = l - chroma / 2;
 
+  // Asignación de los valores RGB según el rango del matiz
   let r = 0;
   let g = 0;
   let b = 0;
@@ -57,11 +59,11 @@ function hslToHex(h, s, l) {
 
   return `#${toHex(red)}${toHex(green)}${toHex(blue)}`.toUpperCase();
 }
-
+// Convierte un valor numérico a su representación hex de dos dígitos
 function toHex(value) {
   return value.toString(16).padStart(2, "0");
 }
-
+// Crea un objeto de color con valores HSL, su equivalente hex
 function createColor() {
   const hsl = generateRandomHSL();
   const hex = hslToHex(hsl.h, hsl.s, hsl.l);
@@ -73,6 +75,7 @@ function createColor() {
   };
 }
 
+// Genera una nueva paleta de colores, manteniendo los colores bloqueados
 function generatePalette(size) {
   const newPalette = [];
 
@@ -89,7 +92,7 @@ function generatePalette(size) {
   currentPalette = newPalette;
   renderPalette();
 }
-
+// Renderiza la paleta de colores en el DOM
 function renderPalette() {
   paletteGrid.innerHTML = "";
 
@@ -121,7 +124,7 @@ function renderPalette() {
         </div>
       </div>
     `;
-
+// 
     card.addEventListener("click", () => {
       copyToClipboard(color.hex);
     });
@@ -153,7 +156,7 @@ function toggleLock(index) {
       : "Color desbloqueado"
   );
 }
-
+// Copia el texto al portapapeles y muestra una notificación
 async function copyToClipboard(text) {
   try {
     await navigator.clipboard.writeText(text);
@@ -171,13 +174,13 @@ function showToast(message) {
     toast.classList.remove("show");
   }, 1800);
 }
-
+// Guarda la paleta actual en localStorage y actualiza la sección de paletas guardadas
 function savePalette() {
   localStorage.setItem("colorflyPalette", JSON.stringify(currentPalette));
   renderSavedPalette();
   showToast("Paleta guardada");
 }
-
+// Renderiza la paleta guardada desde localStorage o muestra un mensaje si no hay ninguna guardada
 function renderSavedPalette() {
   const saved = localStorage.getItem("colorflyPalette");
 
@@ -189,7 +192,7 @@ function renderSavedPalette() {
   const colors = JSON.parse(saved);
 
   savedPalette.innerHTML = "";
-
+// 
   colors.forEach((color) => {
     const chip = document.createElement("div");
     chip.className = "saved-chip";
@@ -199,7 +202,7 @@ function renderSavedPalette() {
     savedPalette.appendChild(chip);
   });
 }
-
+// Eventos para generar la paleta, cambiar su tamaño, guardar y mostrar la paleta guardada
 paletteForm.addEventListener("submit", (event) => {
   event.preventDefault();
   generatePalette(Number(paletteSize.value));
